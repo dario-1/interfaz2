@@ -548,6 +548,27 @@ font: 87 7pt &quot;Arial Black&quot;;
                      </property>
                     </item>
                    </widget>
+                   <widget class="QLabel" name="label_4">
+                    <property name="geometry">
+                     <rect>
+                      <x>70</x>
+                      <y>180</y>
+                      <width>431</width>
+                      <height>61</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">font:87 12pt &quot;Arial Black&quot;;
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
                   </widget>
                  </item>
                 </layout>
