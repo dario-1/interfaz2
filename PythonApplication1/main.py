@@ -162,11 +162,11 @@ class rooti(QMainWindow):
                     self.proceso1.setCurrentIndex(0)
                     
                 else:
-                    QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 una ruta de guardado.')
+                    QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n una ruta de guardado.')
             except Exception as e:
                 QMessageBox.critical(self, 'Error', f'Error al guardar en Excel: {str(e)}')
         else:
-            QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 ninguna tabla.')
+            QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n ninguna tabla.')
             
     
 
@@ -185,9 +185,13 @@ class rooti(QMainWindow):
     def save2(self):
         if self.file_path:
             document = self.file_path
-            self.output_excel, _ =QFileDialog.getSaveFileName(self, "Guardar archivo Excel", "", "Excel files (*.xls)")
-            if self.output_excel:
-                QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado ')
+            doc = ap.Document(self.file_path)
+            ruta2, _ = QFileDialog.getSaveFileName(self, "Guardar archivo Excel", "", "Excel files (*.xls)")
+            if ruta2:
+                save_option = ap.ExcelSaveOptions()
+                #self.file_path.to_excel(ruta2, index=False)
+                doc.save(ruta2, save_option)
+                QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado')
                 #save_option.ConvertNonTabularData = True  # Evitar convertir datos no tabulares (CSV)
                 #document.save(self.output_excel, save_option)
 

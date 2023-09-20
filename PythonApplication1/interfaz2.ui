@@ -446,6 +446,18 @@ color: rgb(0, 0, 0);</string>
                        </size>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_5">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
                        <item>
                         <spacer name="horizontalSpacer_2">
                          <property name="orientation">
@@ -453,7 +465,7 @@ color: rgb(0, 0, 0);</string>
                          </property>
                          <property name="sizeHint" stdset="0">
                           <size>
-                           <width>159</width>
+                           <width>170</width>
                            <height>20</height>
                           </size>
                          </property>
@@ -499,7 +511,7 @@ font: 87 7pt &quot;Arial Black&quot;;
                          </property>
                          <property name="sizeHint" stdset="0">
                           <size>
-                           <width>159</width>
+                           <width>170</width>
                            <height>20</height>
                           </size>
                          </property>
@@ -680,7 +692,7 @@ font: 87 7pt &quot;Arial Black&quot;;
                            <number>0</number>
                           </property>
                           <property name="topMargin">
-                           <number>0</number>
+                           <number>20</number>
                           </property>
                           <property name="rightMargin">
                            <number>0</number>
