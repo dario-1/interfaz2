@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import sys
 import aspose.pdf as ap
-from pdf2excel import Converter
+#from pdf2excel import Converter
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QFileDialog, QMainWindow, QVBoxLayout, QMessageBox
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import NamedStyle
@@ -23,6 +23,11 @@ class rooti(QMainWindow):
         self.bt_menu.clicked.connect(self.mover_menu)
         self.bt_restart.hide()
         #botones de control
+        self.metodo1.model().item(0).setEnabled(False)
+        self.proceso1.model().item(0).setEnabled(False)
+        self.bt_filter1.setEnabled(False)
+        self.bt_save1.setEnabled(False)
+        self.bt_load1.setEnabled(False)
         self.bt_equi1.clicked.connect(self.equipo1)
         self.bt_equi2.clicked.connect(self.equipo2)
         self.bt_load1.clicked.connect(self.load1)
@@ -30,7 +35,7 @@ class rooti(QMainWindow):
         self.bt_filter1.clicked.connect(self.filter1)
         self.bt_filter2.clicked.connect(self.filter2)
         self.bt_save1.clicked.connect(self.save1)
-        #self.bt_save2.clicked.connect(self.save2)
+        self.bt_save2.clicked.connect(self.save2)
         #botones
         self.bt_maxi.clicked.connect(self.maximizar)
         self.bt_restart.clicked.connect(self.normal)
@@ -116,10 +121,14 @@ class rooti(QMainWindow):
             self.bt_filter1.setEnabled(True)
         else:
             self.label_4.setText('No se seleccion\xF3 ning\xFAn archivo.')
+            self.bt_filter1.setEnabled(False)
     
     def filter1(self):
         if self.archivo_seleccionado:
             try:
+                item = self.metodo1.currentText()
+                item2 = self.proceso1.currentText()
+                self.label_7.setText("Has selecionado\n"+item+" y "+item2)
                 df = pd.read_csv(self.archivo_seleccionado)
                 columnas = df.columns
                 tabla = df[['Abs (Corr)1', 'Abs (Corr)2', 'Abs (Corr)3']]
@@ -144,12 +153,21 @@ class rooti(QMainWindow):
                 if ruta_guardado:
                     self.tabla.to_excel(ruta_guardado, index=False)
                     QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado en: {ruta_guardado}')
+                    self.label_4.setText("Archivo Guardado")
+                    self.bt_save1.setEnabled(False)
+                    self.bt_filter1.setEnabled(False)
+                    self.label_7.setText('')
+                    self.metodo1.setCurrentIndex(0)
+                    self.proceso1.setCurrentIndex(0)
+                    
                 else:
                     QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 una ruta de guardado.')
             except Exception as e:
                 QMessageBox.critical(self, 'Error', f'Error al guardar en Excel: {str(e)}')
         else:
             QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 ninguna tabla.')
+            
+    
 
     def equipo2(self):
         self.bt_load2.setEnabled(True)
@@ -158,16 +176,19 @@ class rooti(QMainWindow):
         self.file_path, _ = QFileDialog.getOpenFileName(self, "Seleccionar archivo PDF", "", "PDF files (*.pdf)")
         if self.file_path:
             self.label_6.setText("Archivo cargado")
-            #self.filter2.setEnabled(True)
-
+            self.bt_filter2.setEnabled(True)
+    
     def filter2(self):
+        self.bt_save2.setEnabled(True)
+
+    def save2(self):
         if self.file_path:
-            document = PdfDocument(self.file_path)
-            self.output_excel, _ = QFileDialog.getSaveFileName(self, "Guardar archivo Excel", "", "Excel files (*.xls)")
+            document = self.file_path
+            self.output_excel, _ =QFileDialog.getSaveFileName(self, "Guardar archivo Excel", "", "Excel files (*.xls)")
             if self.output_excel:
-                save_option = PdfDocument.ExcelSaveOptions()
-                save_option.ConvertNonTabularData = True  # Evitar convertir datos no tabulares (CSV)
-                document.save(self.output_excel, save_option)
+                QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado ')
+                #save_option.ConvertNonTabularData = True  # Evitar convertir datos no tabulares (CSV)
+                #document.save(self.output_excel, save_option)
 
                 #self.status_label.setText("Tablas en formato CSV eliminadas")
                 #self.save_button.setEnabled(True)
