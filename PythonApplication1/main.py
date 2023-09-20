@@ -2,6 +2,8 @@
 import os
 import pandas as pd
 import sys
+import aspose.pdf as ap
+from pdf2excel import Converter
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QFileDialog, QMainWindow, QVBoxLayout, QMessageBox
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import NamedStyle
@@ -22,11 +24,11 @@ class rooti(QMainWindow):
         self.bt_restart.hide()
         #botones de control
         self.bt_equi1.clicked.connect(self.equipo1)
-        #self.bt_equi2.clicked.connect(self.equipo2)
+        self.bt_equi2.clicked.connect(self.equipo2)
         self.bt_load1.clicked.connect(self.load1)
-        #self.bt_load2.clicked.connect(self.load2)
+        self.bt_load2.clicked.connect(self.load2)
         self.bt_filter1.clicked.connect(self.filter1)
-        #self.bt_filter2.clicked.connect(self.filter2)
+        self.bt_filter2.clicked.connect(self.filter2)
         self.bt_save1.clicked.connect(self.save1)
         #self.bt_save2.clicked.connect(self.save2)
         #botones
@@ -102,6 +104,7 @@ class rooti(QMainWindow):
     
     def equipo1(self):
         self.bt_load1.setEnabled(True)
+     
         
     def load1(self):
         options = QFileDialog.Options()
@@ -148,6 +151,26 @@ class rooti(QMainWindow):
         else:
             QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 ninguna tabla.')
 
+    def equipo2(self):
+        self.bt_load2.setEnabled(True)
+
+    def load2(self):
+        self.file_path, _ = QFileDialog.getOpenFileName(self, "Seleccionar archivo PDF", "", "PDF files (*.pdf)")
+        if self.file_path:
+            self.label_6.setText("Archivo cargado")
+            #self.filter2.setEnabled(True)
+
+    def filter2(self):
+        if self.file_path:
+            document = PdfDocument(self.file_path)
+            self.output_excel, _ = QFileDialog.getSaveFileName(self, "Guardar archivo Excel", "", "Excel files (*.xls)")
+            if self.output_excel:
+                save_option = PdfDocument.ExcelSaveOptions()
+                save_option.ConvertNonTabularData = True  # Evitar convertir datos no tabulares (CSV)
+                document.save(self.output_excel, save_option)
+
+                #self.status_label.setText("Tablas en formato CSV eliminadas")
+                #self.save_button.setEnabled(True)
 
 
 

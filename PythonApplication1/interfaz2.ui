@@ -347,7 +347,7 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
           <item>
            <widget class="QStackedWidget" name="stackedWidget">
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="page_equipo1">
              <property name="styleSheet">
@@ -772,6 +772,27 @@ font: 87 7pt &quot;Arial Black&quot;;
                       <string>Proceso 3</string>
                      </property>
                     </item>
+                   </widget>
+                   <widget class="QLabel" name="label_6">
+                    <property name="geometry">
+                     <rect>
+                      <x>130</x>
+                      <y>310</y>
+                      <width>291</width>
+                      <height>61</height>
+                     </rect>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">font:87 12pt &quot;Arial Black&quot;;
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
                    </widget>
                   </widget>
                  </item>
