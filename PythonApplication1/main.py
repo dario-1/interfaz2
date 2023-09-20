@@ -22,12 +22,13 @@ class rooti(QMainWindow):
         loadUi('D:/ESPE/Practicas INEN/interfaz2/PythonApplication1/interfaz2.ui',self)
         self.bt_menu.clicked.connect(self.mover_menu)
         self.bt_restart.hide()
-        #botones de control
+        #condiciones iniciales botones
         self.metodo1.model().item(0).setEnabled(False)
         self.proceso1.model().item(0).setEnabled(False)
         self.bt_filter1.setEnabled(False)
         self.bt_save1.setEnabled(False)
         self.bt_load1.setEnabled(False)
+        #botones de funciones
         self.bt_equi1.clicked.connect(self.equipo1)
         self.bt_equi2.clicked.connect(self.equipo2)
         self.bt_load1.clicked.connect(self.load1)
@@ -36,7 +37,7 @@ class rooti(QMainWindow):
         self.bt_filter2.clicked.connect(self.filter2)
         self.bt_save1.clicked.connect(self.save1)
         self.bt_save2.clicked.connect(self.save2)
-        #botones
+        #botones de barra de titulo
         self.bt_maxi.clicked.connect(self.maximizar)
         self.bt_restart.clicked.connect(self.normal)
         self.bt_mini.clicked.connect(self.minimizar)
