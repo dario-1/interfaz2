@@ -28,6 +28,9 @@ class rooti(QMainWindow):
         self.bt_filter1.setEnabled(False)
         self.bt_save1.setEnabled(False)
         self.bt_load1.setEnabled(False)
+        self.bt_load2.setEnabled(False)
+        self.bt_save2.setEnabled(False)
+        self.bt_filter2.setEnabled(False)
         #botones de funciones
         self.bt_equi1.clicked.connect(self.equipo1)
         self.bt_equi2.clicked.connect(self.equipo2)
