@@ -227,7 +227,9 @@ class rooti(QMainWindow):
     def load2(self):
         file_dialog = QFileDialog()
         file_path, _ = file_dialog.getOpenFileName(self, "Select PDF File", "", "PDF files (*.pdf)")
+        self.archivo_seleccionado = file_path
         if file_path:
+            self.label_6.setText("Archivo cargado")
             dataframes = []
             def extract_columns_from_table(table):
                 num_columns = len(table[0])
@@ -249,10 +251,11 @@ class rooti(QMainWindow):
                         print("---- Fin de la tabla ----")
             df = pd.concat(all_series, axis=1)
             print(df)
+            self.df = df
             columnas = df.columns
+            self.bt_filter2.setEnabled(True)
             print(columnas)
-            tabla1 = df[['#', 'Nombre del Usuario', 'Fecha y hora','Triplicados']]
-            print(tabla1)
+            
             
             
                       
@@ -265,40 +268,53 @@ class rooti(QMainWindow):
             #    import csv
         
             
-    def filter2(self, pdf_file):
-        self.bt_save2.setEnabled(True)
-        options = QFileDialog.Options()
-        options |= QFileDialog.ReadOnly
-        archivo, _ = QFileDialog.getOpenFileName(self, 'Buscador de csv', '', 'Archivos CSV (*.csv);;Todos los archivos (*)', options=options)
-        if archivo:
+    def filter2(self):
+        if hasattr(self, 'df'):
+            self.bt_save2.setEnabled(True)
             
-            #self.label_4.setText("Archivo cargado")
-    
-            self.archivo_seleccionado = archivo
-            df = pd.read_csv(self.archivo_seleccionado)
-            print(df.index)
-            
-            
-        #else:
-            #self.label_4.setText('No se seleccion\xF3 ning\xFAn archivo.')
-            #self.bt_filter1.setEnabled(False)
+            try:
+                
+                 df = self.df
+                 self.label_6.setText("Archivo Filtrado")
+                 tabla1 = df[['#', 'Abs 690', 'Media Fosforo Total (mg/L)','Triplicados','Abs 690 Triplicados','Abs 690 Desv est']]
+                 print(tabla1)
+                 self.tabla1 = tabla1
 
+                # columnas = df.columns
+                # tabla = df[['Abs (Corr)1', 'Abs (Corr)2', 'Abs (Corr)3']]
+                # self.tabla = tabla
+                # self.label_4.setText("Archivo Filtrado")
+                # self.bt_save1.setEnabled(True)
+            except Exception as e:
+                 QMessageBox.critical(self, 'Error', f'Error al filtrar la tabla: {str(e)}')
+            
+        else:
+            QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n ninguna tabla.')
 
     def save2(self):
-        if self.file_path:
-            document = self.file_path
-            doc = ap.Document(self.file_path)
-            ruta2, _ = QFileDialog.getSaveFileName(self, "Guardar archivo Excel", "", "Excel files (*.xls)")
-            if ruta2:
-                save_option = ap.ExcelSaveOptions()
-                #self.file_path.to_excel(ruta2, index=False)
-                doc.save(ruta2, save_option)
-                QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado')
-                #save_option.ConvertNonTabularData = True  # Evitar convertir datos no tabulares (CSV)
-                #document.save(self.output_excel, save_option)
-
-                #self.status_label.setText("Tablas en formato CSV eliminadas")
-                #self.save_button.setEnabled(True)
+        if hasattr(self, 'tabla1'):
+            try:
+                nombre_archivo = os.path.splitext(os.path.basename(self.archivo_seleccionado))[0]
+                nuevo_nombre_excel = f"Filtrado_{nombre_archivo}.xlsx"
+                options = QFileDialog.Options()
+                options |= QFileDialog.ReadOnly
+                ruta_guardado, _ = QFileDialog.getSaveFileName(self, 'Guardar en Excel', nuevo_nombre_excel, 'Archivos Excel (*.xls);;Todos los archivos (*)', options=options)
+                
+                if ruta_guardado:
+                    self.tabla1.to_excel(ruta_guardado, index=False)
+                    QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado en: {ruta_guardado}')
+                    self.label_6.setText("Archivo Guardado")
+                    self.bt_save2.setEnabled(False)
+                    self.bt_filter2.setEnabled(False)
+                      
+                    
+                    
+                else:
+                    QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n una ruta de guardado.')
+            except Exception as e:
+                QMessageBox.critical(self, 'Error', f'Error al guardar en Excel: {str(e)}')
+        else:
+            QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n ninguna tabla.')
 
 
 
