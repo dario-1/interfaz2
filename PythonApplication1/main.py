@@ -234,28 +234,19 @@ class rooti(QMainWindow):
                document.save(output_excel,excelSaveOptions)
                try:
                    import csv
+                   import re
                    data = []
                    with open(output_excel, newline='') as csvfile:
-                        #spamreader = csv.reader(csvfile, delimiter=',') 
-                        reader=csv.reader(csvfile)
-                        tabla=[]
-                        tablas=[]
-                        for row in reader:
-                            if not row:
-                                if tabla:
-                                    tablas.append(tabla)
-                                    tabla=[]
-                            else:
-                                tabla.append(row)
-                        if tabla:
-                            tablas.append(tabla)
-                                           
-                   for i,tabla in enumerate (tablas):
-                       print(f"Tabla{i+1}:") 
-                       for fila in tabla:
-                           print(', '.join(row))
+                        spamreader = csv.reader(csvfile, delimiter=',') 
+                        for row in spamreader:
+                            data.append(row)
+                        
+                   for row in data:
+                        
+                        print(', '.join(row))
                    
-                   
+                   lon=len(data)
+                   print(lon)
                 
                except Exception as e:
                 print("Error al leer el archivo CSV:", str(e))
