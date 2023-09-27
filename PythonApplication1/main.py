@@ -3,7 +3,12 @@ import os
 import pandas as pd
 import sys
 import aspose.pdf as ap
+import aspose.pdf as pdf
+import openpyxl
+import tabula as tb
+from tabula import read_pdf
 #from pdf2excel import Converter
+from openpyxl.styles import PatternFill
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QFileDialog, QMainWindow, QVBoxLayout, QMessageBox
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import NamedStyle
@@ -152,7 +157,7 @@ class rooti(QMainWindow):
                 nuevo_nombre_excel = f"Filtrado_{nombre_archivo}.xlsx"
                 options = QFileDialog.Options()
                 options |= QFileDialog.ReadOnly
-                ruta_guardado, _ = QFileDialog.getSaveFileName(self, 'Guardar en Excel', nuevo_nombre_excel, 'Archivos Excel (*.xlsx);;Todos los archivos (*)', options=options)
+                ruta_guardado, _ = QFileDialog.getSaveFileName(self, 'Guardar en Excel', nuevo_nombre_excel, 'Archivos Excel (*.xls);;Todos los archivos (*)', options=options)
                 
                 if ruta_guardado:
                     self.tabla.to_excel(ruta_guardado, index=False)
@@ -163,6 +168,7 @@ class rooti(QMainWindow):
                     self.label_7.setText('')
                     self.metodo1.setCurrentIndex(0)
                     self.proceso1.setCurrentIndex(0)
+                    formato(nuevo_nombre_excel)
                     
                 else:
                     QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n una ruta de guardado.')
@@ -171,19 +177,141 @@ class rooti(QMainWindow):
         else:
             QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n ninguna tabla.')
             
+    def formato(name):
+        import openpyxl
+
+        # Abre el archivo Excel existente
+        archivo_excel = openpyxl.load_workbook(name)
+
+        # Recorre cada hoja en el archivo Excel
+        for hoja in archivo_excel.sheetnames:
+            hoja_actual = archivo_excel[hoja]
+
+            # Recorre todas las filas y columnas para encontrar la longitud máxima en cada columna
+            max_lengths = [0] * (hoja_actual.max_column + 1)
+
+        for fila in hoja_actual.iter_rows(min_row=1, max_row=hoja_actual.max_row, values_only=True):
+            for columna, valor in enumerate(fila, start=1):
+                if valor is not None:
+                    max_lengths[columna] = max(max_lengths[columna], len(str(valor)))
+
+        # Ajusta el ancho de cada columna para acomodar el contenido más largo
+        for columna, max_length in enumerate(max_lengths[1:], start=1):
+            columna_letra = openpyxl.utils.get_column_letter(columna)
+            hoja_actual.column_dimensions[columna_letra].width = max_length + 2  # Agrega un espacio adicional
+        
+        
+        from openpyxl.styles import PatternFill
+
+        # Define el color de fondo amarillo
+        relleno_amarillo = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')
+
+                
+        # Aplica el color de fondo amarillo a la primera celda de cada columna
+        for columna in hoja_actual.iter_cols(min_col=1, max_col=hoja_actual.max_column, min_row=1, max_row=1):
+            for celda in columna:
+                celda.fill = relleno_amarillo
+        # Guarda los cambios en el archivo Excel
+        archivo_excel.save(name)
+
+        # Cierra el archivo Excel
+        archivo_excel.close()
     
 
     def equipo2(self):
         self.bt_load2.setEnabled(True)
 
     def load2(self):
-        self.file_path, _ = QFileDialog.getOpenFileName(self, "Seleccionar archivo PDF", "", "PDF files (*.pdf)")
-        if self.file_path:
-            self.label_6.setText("Archivo cargado")
-            self.bt_filter2.setEnabled(True)
-    
-    def filter2(self):
+        file_dialog = QFileDialog()
+        file_path, _ = file_dialog.getOpenFileName(self, "Select PDF File", "", "PDF files (*.pdf)")
+        if file_path:
+            document = ap.Document(file_path)
+            output_excel, _ = QFileDialog.getSaveFileName(self, "Guardar como archivo Csv", "", "CSV files (*.csv)")
+
+            if output_excel:
+               excelSaveOptions = pdf.ExcelSaveOptions()
+               excelSaveOptions.format= pdf.ExcelSaveOptions.ExcelFormat.CSV
+               document.save(output_excel,excelSaveOptions)
+               try:
+                   import csv
+                   data = []
+                   with open(output_excel, newline='') as csvfile:
+                        #spamreader = csv.reader(csvfile, delimiter=',') 
+                        reader=csv.reader(csvfile)
+                        tabla=[]
+                        tablas=[]
+                        for row in reader:
+                            if not row:
+                                if tabla:
+                                    tablas.append(tabla)
+                                    tabla=[]
+                            else:
+                                tabla.append(row)
+                        if tabla:
+                            tablas.append(tabla)
+                                           
+                   for i,tabla in enumerate (tablas):
+                       print(f"Tabla{i+1}:") 
+                       for fila in tabla:
+                           print(', '.join(row))
+                   
+                   
+                
+               except Exception as e:
+                print("Error al leer el archivo CSV:", str(e))
+               
+               
+               
+            # for row in data:
+            #     for cell_value in row:
+            #         print(cell_value)
+                        
+                                    
+                        
+            # Spam, Spam, Spam, Spam, Spam, Baked Beans
+            # Spam, Lovely Spam, Wonderful Spam
+               # document.save(output_excel, excelSaveOptions)
+               # document.save(output_excel, asposepdf.SaveFormat.Excel)
+               # df = pd.read_csv(output_excel)
+               # columnas = df.columns
+               # print(columnas)
+                #self.bt_filter2.setEnabled(True)
+                
+
+                #for sheet_name in sheet_names:
+                    #df = xls.parse(sheet_name, header=None)
+                    #self.status_label.setText(f"Mostrando tabla de {sheet_name}")
+                    #print(df)
+                
+                #columnas = df.columns
+                #cv_column = df['% CV']
+                #tabla = df[['% Triplicados']]
+                #self.tabla = cv_column
+                #print(cv_column)
+
+                #self.status_label.setText("La conversion se ha completado y las tablas se han mostrado")
+        
+        
+        
+            
+    def filter2(self, pdf_file):
         self.bt_save2.setEnabled(True)
+        options = QFileDialog.Options()
+        options |= QFileDialog.ReadOnly
+        archivo, _ = QFileDialog.getOpenFileName(self, 'Buscador de csv', '', 'Archivos CSV (*.csv);;Todos los archivos (*)', options=options)
+        if archivo:
+            
+            #self.label_4.setText("Archivo cargado")
+    
+            self.archivo_seleccionado = archivo
+            df = pd.read_csv(self.archivo_seleccionado)
+            print(df.index)
+            
+            
+        #else:
+            #self.label_4.setText('No se seleccion\xF3 ning\xFAn archivo.')
+            #self.bt_filter1.setEnabled(False)
+
 
     def save2(self):
         if self.file_path:
