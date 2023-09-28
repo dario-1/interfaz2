@@ -135,6 +135,7 @@ class rooti(QMainWindow):
             self.label_4.setText("Archivo cargado")
             self.archivo_seleccionado = archivo
             self.bt_filter1.setEnabled(True)
+            
         else:
             self.label_4.setText('No se seleccion\xF3 ning\xFAn archivo.')
             self.bt_filter1.setEnabled(False)
@@ -147,6 +148,7 @@ class rooti(QMainWindow):
                 self.label_7.setText("Has selecionado\n"+item+" y "+item2)
                 df = pd.read_csv(self.archivo_seleccionado)
                 columnas = df.columns
+                print(columnas)
                 tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
                 self.tabla = tabla
                 self.label_4.setText("Archivo Filtrado")
@@ -172,14 +174,17 @@ class rooti(QMainWindow):
                     df.to_excel(writer, index=False, sheet_name='Hoja1')
                     workbook  = writer.book
                     worksheet = writer.sheets['Hoja1']
-                    header_format = workbook.add_format({'bg_color': '#00FF00', 'align': 'center', 'valign': 'vcenter','bold': True})
+                    header_format = workbook.add_format({'bg_color': '#00FF00', 'align': 'center', 'valign': 'vcenter','bold': True,'border':1})
                     for col_num, value in enumerate(df.columns.values):
                         worksheet.write(0, col_num, value, header_format)
+                    cell_format=workbook.add_format({ 'align': 'center', 'valign': 'vcenter','border':1})
                     
                     for i, col in enumerate(df.columns):
                         max_len = max(df[col].astype(str).str.len())
                         max_len = max(max_len, len(col))
                         worksheet.set_column(i, i, max_len + 2)
+                    worksheet.set_default_row(15)  # Altura de fila predeterminada
+                    worksheet.conditional_format(1, 0, len(df), len(df.columns)-1, {'type': 'no_blanks', 'format': cell_format})
                     writer.close()
                     QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado en: {ruta_guardado}')
                     self.label_4.setText("Archivo Guardado")
@@ -281,18 +286,19 @@ class rooti(QMainWindow):
                     worksheet = workbook.get_worksheet_by_name('Hoja1')
                 
                 # Formatear la fila de títulos en verde y centrar los datos
-                    header_format = workbook.add_format({'bg_color': '#00FF00', 'align': 'center', 'valign': 'vcenter','bold': True})
+                    header_format = workbook.add_format({'bg_color': '#00FF00', 'align': 'center', 'valign': 'vcenter','bold': True,'border':1})
                     for col_num, value in enumerate(df.columns.values):
                         worksheet.write(0, col_num, value, header_format)
                     #header_alignment = Alignment(horizontal="center", vertical="center")
 
-                    
+                    cell_format=workbook.add_format({ 'align': 'center', 'valign': 'vcenter','border':1})
                 # Ajustar automáticamente el ancho de las columnas
                     for i, col in enumerate(df.columns):
                         max_len = max(df[col].astype(str).str.len())
                         max_len = max(max_len, len(col))
                         worksheet.set_column(i, i, max_len + 2)
-                        
+                    worksheet.set_default_row(15)  # Altura de fila predeterminada
+                    worksheet.conditional_format(1, 0, len(df), len(df.columns)-1, {'type': 'no_blanks', 'format': cell_format})
                 # Guardar el archivo Excel
                     writer.close()
                 
