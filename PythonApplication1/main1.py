@@ -147,7 +147,7 @@ class rooti(QMainWindow):
                 self.label_7.setText("Has selecionado\n"+item+" y "+item2)
                 df = pd.read_csv(self.archivo_seleccionado)
                 columnas = df.columns
-                tabla = df[['Abs (Corr)1', 'Abs (Corr)2', 'Abs (Corr)3']]
+                tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
                 self.tabla = tabla
                 self.label_4.setText("Archivo Filtrado")
                 self.bt_save1.setEnabled(True)
@@ -167,7 +167,20 @@ class rooti(QMainWindow):
                 ruta_guardado, _ = QFileDialog.getSaveFileName(self, 'Guardar en Excel', nuevo_nombre_excel, 'Archivos Excel (*.xls);;Todos los archivos (*)', options=options)
                 
                 if ruta_guardado:
-                    self.tabla.to_excel(ruta_guardado, index=False)
+                    df = pd.DataFrame(self.tabla)
+                    writer = pd.ExcelWriter(ruta_guardado, engine='xlsxwriter')
+                    df.to_excel(writer, index=False, sheet_name='Hoja1')
+                    workbook  = writer.book
+                    worksheet = writer.sheets['Hoja1']
+                    header_format = workbook.add_format({'bg_color': '#00FF00', 'align': 'center', 'valign': 'vcenter','bold': True})
+                    for col_num, value in enumerate(df.columns.values):
+                        worksheet.write(0, col_num, value, header_format)
+                    
+                    for i, col in enumerate(df.columns):
+                        max_len = max(df[col].astype(str).str.len())
+                        max_len = max(max_len, len(col))
+                        worksheet.set_column(i, i, max_len + 2)
+                    writer.close()
                     QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado en: {ruta_guardado}')
                     self.label_4.setText("Archivo Guardado")
                     self.bt_save1.setEnabled(False)
@@ -175,7 +188,7 @@ class rooti(QMainWindow):
                     self.label_7.setText('')
                     self.metodo1.setCurrentIndex(0)
                     self.proceso1.setCurrentIndex(0)
-                    formato(nuevo_nombre_excel)
+                   
                     
                 else:
                     QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n una ruta de guardado.')
@@ -184,46 +197,7 @@ class rooti(QMainWindow):
         else:
             QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n ninguna tabla.')
             
-    def formato(name):
-        import openpyxl
-
-        # Abre el archivo Excel existente
-        archivo_excel = openpyxl.load_workbook(name)
-
-        # Recorre cada hoja en el archivo Excel
-        for hoja in archivo_excel.sheetnames:
-            hoja_actual = archivo_excel[hoja]
-
-            # Recorre todas las filas y columnas para encontrar la longitud máxima en cada columna
-            max_lengths = [0] * (hoja_actual.max_column + 1)
-
-        for fila in hoja_actual.iter_rows(min_row=1, max_row=hoja_actual.max_row, values_only=True):
-            for columna, valor in enumerate(fila, start=1):
-                if valor is not None:
-                    max_lengths[columna] = max(max_lengths[columna], len(str(valor)))
-
-        # Ajusta el ancho de cada columna para acomodar el contenido más largo
-        for columna, max_length in enumerate(max_lengths[1:], start=1):
-            columna_letra = openpyxl.utils.get_column_letter(columna)
-            hoja_actual.column_dimensions[columna_letra].width = max_length + 2  # Agrega un espacio adicional
-        
-        
-        from openpyxl.styles import PatternFill
-
-        # Define el color de fondo amarillo
-        relleno_amarillo = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')
-
-                
-        # Aplica el color de fondo amarillo a la primera celda de cada columna
-        for columna in hoja_actual.iter_cols(min_col=1, max_col=hoja_actual.max_column, min_row=1, max_row=1):
-            for celda in columna:
-                celda.fill = relleno_amarillo
-        # Guarda los cambios en el archivo Excel
-        archivo_excel.save(name)
-
-        # Cierra el archivo Excel
-        archivo_excel.close()
-    
+   
 
     def equipo2(self):
         self.bt_load2.setEnabled(True)
@@ -278,11 +252,7 @@ class rooti(QMainWindow):
                  print(tabla1)
                  self.tabla1 = tabla1
 
-                # columnas = df.columns
-                # tabla = df[['Abs (Corr)1', 'Abs (Corr)2', 'Abs (Corr)3']]
-                # self.tabla = tabla
-                # self.label_4.setText("Archivo Filtrado")
-                # self.bt_save1.setEnabled(True)
+                
             except Exception as e:
                  QMessageBox.critical(self, 'Error', f'Error al filtrar la tabla: {str(e)}')
             
@@ -311,7 +281,7 @@ class rooti(QMainWindow):
                     worksheet = workbook.get_worksheet_by_name('Hoja1')
                 
                 # Formatear la fila de títulos en verde y centrar los datos
-                    header_format = workbook.add_format({'bg_color': '#00FF00', 'align': 'center', 'valign': 'vcenter'})
+                    header_format = workbook.add_format({'bg_color': '#00FF00', 'align': 'center', 'valign': 'vcenter','bold': True})
                     for col_num, value in enumerate(df.columns.values):
                         worksheet.write(0, col_num, value, header_format)
                     #header_alignment = Alignment(horizontal="center", vertical="center")
