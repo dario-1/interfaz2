@@ -7,6 +7,10 @@ import PyPDF2
 import aspose.pdf as ap
 import aspose.pdf as pdf
 import openpyxl
+import xlsxwriter
+from openpyxl import Workbook
+from openpyxl.styles import PatternFill, Alignment
+from openpyxl.utils import get_column_letter
 import io
 import tabula as tb
 from tabula import read_pdf
@@ -260,12 +264,6 @@ class rooti(QMainWindow):
             
                       
 
-            # if output_excel:
-            #    excelSaveOptions = pdf.ExcelSaveOptions()
-            #    excelSaveOptions.format= pdf.ExcelSaveOptions.ExcelFormat.CSV
-            #    document.save(output_excel,excelSaveOptions)
-               
-            #    import csv
         
             
     def filter2(self):
@@ -298,23 +296,46 @@ class rooti(QMainWindow):
                 nuevo_nombre_excel = f"Filtrado_{nombre_archivo}.xlsx"
                 options = QFileDialog.Options()
                 options |= QFileDialog.ReadOnly
-                ruta_guardado, _ = QFileDialog.getSaveFileName(self, 'Guardar en Excel', nuevo_nombre_excel, 'Archivos Excel (*.xls);;Todos los archivos (*)', options=options)
-                
+                ruta_guardado, _ = QFileDialog.getSaveFileName(self, 'Guardar en Excel', nuevo_nombre_excel, 'Archivos Excel (*.xlsx);;Todos los archivos (*)', options=options)
+            
                 if ruta_guardado:
-                    self.tabla1.to_excel(ruta_guardado, index=False)
+                # Crear un DataFrame a partir de self.tabla1 (asegúrate de tener pandas instalado)
+                    df = pd.DataFrame(self.tabla1)
+                
+                # Crear un escritor de Excel
+                    writer = pd.ExcelWriter(ruta_guardado, engine='xlsxwriter')
+                    df.to_excel(writer, index=False, sheet_name='Hoja1')
+                
+                # Obtener la hoja de cálculo
+                    workbook = writer.book
+                    worksheet = workbook.get_worksheet_by_name('Hoja1')
+                
+                # Formatear la fila de títulos en verde y centrar los datos
+                    header_format = workbook.add_format({'bg_color': '#00FF00', 'align': 'center', 'valign': 'vcenter'})
+                    for col_num, value in enumerate(df.columns.values):
+                        worksheet.write(0, col_num, value, header_format)
+                    #header_alignment = Alignment(horizontal="center", vertical="center")
+
+                    
+                # Ajustar automáticamente el ancho de las columnas
+                    for i, col in enumerate(df.columns):
+                        max_len = max(df[col].astype(str).str.len())
+                        max_len = max(max_len, len(col))
+                        worksheet.set_column(i, i, max_len + 2)
+                        
+                # Guardar el archivo Excel
+                    writer.close()
+                
                     QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado en: {ruta_guardado}')
                     self.label_6.setText("Archivo Guardado")
                     self.bt_save2.setEnabled(False)
                     self.bt_filter2.setEnabled(False)
-                      
-                    
-                    
                 else:
-                    QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n una ruta de guardado.')
+                    QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 una ruta de guardado.')
             except Exception as e:
                 QMessageBox.critical(self, 'Error', f'Error al guardar en Excel: {str(e)}')
         else:
-            QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n ninguna tabla.')
+            QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 ninguna tabla.')
 
 
 
