@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+
+# coding: latin1
 import os
 import pandas as pd
 import sys
@@ -137,7 +138,7 @@ class rooti(QMainWindow):
             self.bt_filter1.setEnabled(True)
             
         else:
-            self.label_4.setText('No se seleccion\xF3 ning\xFAn archivo.')
+            self.label_4.setText('No se seleccionó ning\xFAn archivo.')
             self.bt_filter1.setEnabled(False)
     
     def filter1(self):
@@ -146,7 +147,7 @@ class rooti(QMainWindow):
                 item = self.metodo1.currentText()
                 item2 = self.proceso1.currentText()
                 self.label_7.setText("Has selecionado\n"+item+" y "+item2)
-                df = pd.read_csv(self.archivo_seleccionado)
+                df = pd.read_csv(self.archivo_seleccionado, encoding='latin-1')
                 columnas = df.columns
                 print(columnas)
                 tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
@@ -253,7 +254,14 @@ class rooti(QMainWindow):
                 
                  df = self.df
                  self.label_6.setText("Archivo Filtrado")
-                 tabla1 = df[['#', 'Abs 690', 'Media Fosforo Total (mg/L)','Triplicados','Abs 690 Triplicados','Abs 690 Desv est']]
+                 
+                 df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']] = df['Triplicados'].str.split(expand=True)
+                 print(df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']])
+                 df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']] = df['Abs 690 Triplicados'].str.split(expand=True)
+                 print(df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']])
+                 
+                 tabla1 = df[['ID de muestra', 'Media Fosforo Total (mg/L)','Desv est','Media Abs 690 (AU)','Abs 690 Desv est']]
+                 tabla1 = pd.concat([tabla1, df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']],df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']]], axis=1)
                  print(tabla1)
                  self.tabla1 = tabla1
 
