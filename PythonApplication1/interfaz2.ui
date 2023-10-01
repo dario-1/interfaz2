@@ -6,14 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1255</width>
+    <height>831</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">#centralwidget{
+background-color: rgb(33, 43, 51);
+}</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,8">
     <property name="spacing">
      <number>0</number>
@@ -32,25 +37,30 @@
     </property>
     <item>
      <widget class="QFrame" name="frame_top">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>50</height>
+       </size>
+      </property>
       <property name="styleSheet">
        <string notr="true">QFrame{
 	
 	
-	background-color: rgb(0, 0, 0);
+	background-color: rgb(61, 80, 95);
 	
 	
 	border-color: rgb(0, 0, 0);
 	
 }
 QPushButton{
-background-color: rgb(221, 221, 221);
-border-radius:20px;}
+background-color: rgb(61, 80, 95);
+border-radius:15px;
+border:3px solid rgb(120,157,186);
+}
 QPushButton:hover{
-background-color: rgb(170, 170, 255);
-border-top-left-radius:20px;
-border-bottom-left-radius:20px;
-color:rgb(23, 2, 127);
-border-radius:20px;}</string>
+background-color:rgb(120, 157, 186);
+}</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -61,55 +71,73 @@ border-radius:20px;}</string>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QPushButton" name="bt_menu">
+         <property name="minimumSize">
+          <size>
+           <width>130</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>130</width>
+           <height>30</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">font:87 12pt &quot;Arial Black&quot;;
-color: rgb(0, 170, 255);</string>
+          <string notr="true">font:87 12pt &quot;Arial &quot;;
+color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>Menú</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>imagenes/menu-alt-svgrepo-com.svg</normaloff>imagenes/menu-alt-svgrepo-com.svg</iconset>
+           <normaloff>icons/align-center.svg</normaloff>icons/align-center.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <family>16pt Arial</family>
+           <pointsize>14</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="styleSheet">
-          <string notr="true">font:87 12pt &quot;Arial Black&quot;;
-color: rgb(0, 170, 255);</string>
+          <string notr="true">
+font: 87italic 16pt &quot;Arial&quot;;
+color:rgb(255, 255, 255);</string>
          </property>
          <property name="text">
-          <string>Depurador de Archivos</string>
+          <string>                         Depurador de Archivos</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>280</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <widget class="QPushButton" name="bt_mini">
          <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
          <property name="text">
@@ -117,12 +145,12 @@ color: rgb(0, 170, 255);</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>imagenes/minus-svgrepo-com.svg</normaloff>imagenes/minus-svgrepo-com.svg</iconset>
+           <normaloff>icons/minus.svg</normaloff>icons/minus.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -131,8 +159,14 @@ color: rgb(0, 170, 255);</string>
         <widget class="QPushButton" name="bt_restart">
          <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
          <property name="text">
@@ -140,12 +174,12 @@ color: rgb(0, 170, 255);</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>imagenes/maxi.svg</normaloff>imagenes/maxi.svg</iconset>
+           <normaloff>icons/minimize-2.svg</normaloff>icons/minimize-2.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -154,8 +188,14 @@ color: rgb(0, 170, 255);</string>
         <widget class="QPushButton" name="bt_maxi">
          <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
          <property name="text">
@@ -163,12 +203,12 @@ color: rgb(0, 170, 255);</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>imagenes/maximize-size-svgrepo-com.svg</normaloff>imagenes/maximize-size-svgrepo-com.svg</iconset>
+           <normaloff>icons/maximize-2.svg</normaloff>icons/maximize-2.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -177,8 +217,14 @@ color: rgb(0, 170, 255);</string>
         <widget class="QPushButton" name="bt_close">
          <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>40</height>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
           </size>
          </property>
          <property name="text">
@@ -186,12 +232,12 @@ color: rgb(0, 170, 255);</string>
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>imagenes/cross-svgrepo-com.svg</normaloff>imagenes/cross-svgrepo-com.svg</iconset>
+           <normaloff>icons/x.svg</normaloff>icons/x.svg</iconset>
          </property>
          <property name="iconSize">
           <size>
-           <width>30</width>
-           <height>30</height>
+           <width>25</width>
+           <height>25</height>
           </size>
          </property>
         </widget>
@@ -202,7 +248,7 @@ color: rgb(0, 170, 255);</string>
     <item>
      <widget class="QFrame" name="frame_bot">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(0, 170, 255);</string>
+       <string notr="true">background-color: rgb(24, 34, 43);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -211,6 +257,18 @@ color: rgb(0, 170, 255);</string>
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QFrame" name="frame_control">
          <property name="enabled">
@@ -218,7 +276,7 @@ color: rgb(0, 170, 255);</string>
          </property>
          <property name="minimumSize">
           <size>
-           <width>200</width>
+           <width>300</width>
            <height>0</height>
           </size>
          </property>
@@ -232,28 +290,24 @@ color: rgb(0, 170, 255);</string>
           <string notr="true">
 QFrame{	
 	
-	background-color: rgb(170, 170, 255);
-	background-color: rgb(0, 0, 0);
+	
+	
+	background-color: rgba(61, 80, 95,100);
 	
 }
 QPushButton{
-border-color:rgb(23, 2, 127);
-	border-right-color: rgb(0, 0, 0);
-	
-font:87 12pt &quot;Arial Black&quot;;
-background-color: rgb(0, 170, 255);
-border-top-left-radius:20px;
-border-bottom-left-radius:20px;
-	color: rgb(0, 0, 0);
+padding:10px;
+border-radius:5px;	
+font:87 12pt &quot;Arial &quot;;
+background-color:rgba(33, 43, 51,100);
+border:3px solid rgb(120,157,186);
+
+color:rgb(253, 253, 253);
 
 }
 QPushButton:hover{
 
-background-color: rgb(170, 170, 255);
-border-top-left-radius:20px;
-border-bottom-left-radius:20px;
-color:rgb(23, 2, 127);
-font:87 12pt &quot;Arial Black&quot;;}</string>
+background-color:rgb(120, 157, 186);}</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -262,6 +316,21 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QPushButton" name="bt_equi1">
             <property name="minimumSize">
@@ -278,7 +347,7 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>imagenes/come-on-svgrepo-com.svg</normaloff>imagenes/come-on-svgrepo-com.svg</iconset>
+              <normaloff>icons/codesandbox.svg</normaloff>icons/codesandbox.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -301,7 +370,7 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>imagenes/come-on-svgrepo-com.svg</normaloff>imagenes/come-on-svgrepo-com.svg</iconset>
+              <normaloff>icons/cpu.svg</normaloff>icons/cpu.svg</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -321,9 +390,33 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
 	
 	
 	
-	background-color: rgb(221, 221, 221);
+	background-color: rgb(24, 34, 43);
 	
 }
+
+
+
+
+
+QPushButton{
+border-color:rgb(23, 2, 127);
+	border-right-color: rgb(0, 0, 0);
+	
+font:87 12pt &quot;Arial Black&quot;;
+
+	background-color:rgba(33, 43, 51,100);
+border-top-left-radius:20px;
+border-bottom-left-radius:20px;
+	color:rgb(253, 253, 253);
+
+}
+QPushButton:hover{
+
+background-color:rgb(120, 157, 186);
+border-top-left-radius:20px;
+border-bottom-left-radius:20px;
+color:rgb(23, 2, 127);
+font:87 12pt &quot;Arial Black&quot;;}
 
 
 </string>
@@ -334,7 +427,7 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -352,13 +445,15 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
           </property>
           <item>
            <widget class="QStackedWidget" name="stackedWidget">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgba(61, 80, 95,100);</string>
+            </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="page_equipo1">
              <property name="styleSheet">
-              <string notr="true">
-	background-color: rgb(221, 221, 221);
+              <string notr="true">background-color: rgba(61, 80, 95,100);
 
 QPushButton{
 border-color:rgb(23, 2, 127);
@@ -398,7 +493,10 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
               </property>
               <item>
                <widget class="QWidget" name="widget" native="true">
-                <layout class="QVBoxLayout" name="verticalLayout_4" stretch="3">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0">
                  <property name="spacing">
                   <number>0</number>
                  </property>
@@ -417,6 +515,21 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
                  <item>
                   <widget class="QWidget" name="widget_3" native="true">
                    <layout class="QVBoxLayout" name="verticalLayout_8">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
                     <item>
                      <widget class="QLabel" name="label_2">
                       <property name="maximumSize">
@@ -426,8 +539,8 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">font:87 12pt &quot;Arial Black&quot;;
-color: rgb(0, 0, 0);</string>
+                       <string notr="true">font:87 14pt &quot;Arial &quot;;
+color:rgb(255, 255, 255);</string>
                       </property>
                       <property name="text">
                        <string>Selección de Método</string>
@@ -444,6 +557,9 @@ color: rgb(0, 0, 0);</string>
                         <width>16777215</width>
                         <height>80</height>
                        </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgba(61, 80, 95,100);</string>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_5">
                        <property name="leftMargin">
@@ -473,19 +589,28 @@ color: rgb(0, 0, 0);</string>
                        </item>
                        <item>
                         <widget class="QComboBox" name="metodo1">
+                         <property name="minimumSize">
+                          <size>
+                           <width>300</width>
+                           <height>40</height>
+                          </size>
+                         </property>
                          <property name="maximumSize">
                           <size>
-                           <width>200</width>
-                           <height>30</height>
+                           <width>300</width>
+                           <height>40</height>
                           </size>
                          </property>
                          <property name="cursor">
                           <cursorShape>PointingHandCursor</cursorShape>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: rgb(255, 255, 255);
-font: 87 7pt &quot;Arial Black&quot;;
-</string>
+                          <string notr="true">	background-color:rgba(33, 43, 51,100);
+font: 87 12pt &quot;Arial &quot;;
+border-top-left-radius:8px;
+border-bottom-left-radius:8px;
+color: rgb(255, 255, 255);
+border:3px solid rgb(120,157,186);</string>
                          </property>
                          <item>
                           <property name="text">
@@ -494,12 +619,17 @@ font: 87 7pt &quot;Arial Black&quot;;
                          </item>
                          <item>
                           <property name="text">
-                           <string>Método 1</string>
+                           <string>Método Llama</string>
                           </property>
                          </item>
                          <item>
                           <property name="text">
-                           <string>Método 2</string>
+                           <string>Método Horno de Grafito</string>
+                          </property>
+                         </item>
+                         <item>
+                          <property name="text">
+                           <string>Método Generación de Hidruros</string>
                           </property>
                          </item>
                         </widget>
@@ -547,8 +677,8 @@ font: 87 7pt &quot;Arial Black&quot;;
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">font:87 12pt &quot;Arial Black&quot;;
-color: rgb(0, 0, 0);</string>
+                          <string notr="true">font:87 14pt &quot;Arial &quot;;
+color:rgb(255, 255, 255);</string>
                          </property>
                          <property name="text">
                           <string>Selección de Proceso</string>
@@ -588,83 +718,32 @@ color: rgb(0, 0, 0);</string>
                           </item>
                           <item>
                            <widget class="QComboBox" name="proceso1">
+                            <property name="minimumSize">
+                             <size>
+                              <width>300</width>
+                              <height>40</height>
+                             </size>
+                            </property>
                             <property name="maximumSize">
                              <size>
-                              <width>200</width>
-                              <height>30</height>
+                              <width>300</width>
+                              <height>40</height>
                              </size>
                             </property>
                             <property name="cursor">
                              <cursorShape>PointingHandCursor</cursorShape>
                             </property>
                             <property name="styleSheet">
-                             <string notr="true">background-color: rgb(255, 255, 255);
-font: 87 7pt &quot;Arial Black&quot;;
-</string>
+                             <string notr="true">	background-color:rgba(33, 43, 51,100);
+font: 87 12pt &quot;Arial &quot;;
+border-top-left-radius:8px;
+border-bottom-left-radius:8px;
+color: rgb(255, 255, 255);
+border:3px solid rgb(120,157,186);</string>
                             </property>
                             <item>
                              <property name="text">
                               <string>Seleccioné una opción</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 1</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 2</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 3</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 4</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 5</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 6</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 7</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 8</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 9</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 10</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 11</string>
-                             </property>
-                            </item>
-                            <item>
-                             <property name="text">
-                              <string>Proceso 12</string>
                              </property>
                             </item>
                            </widget>
@@ -729,8 +808,13 @@ font: 87 7pt &quot;Arial Black&quot;;
                             </property>
                             <property name="styleSheet">
                              <string notr="true">font: 87 10pt &quot;Arial Black&quot;;
-background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
+	background-color:rgba(33, 43, 51,100);
+color: rgb(255, 255, 255);
+border:3px solid rgb(120,157,186);
+border-top-left-radius:10px;
+border-bottom-left-radius:10px;
+border-top-right-radius:10px;
+border-bottom-right-radius:10px;</string>
                             </property>
                             <property name="text">
                              <string/>
@@ -799,9 +883,14 @@ color: rgb(0, 0, 0);</string>
                              </size>
                             </property>
                             <property name="styleSheet">
-                             <string notr="true">font:87 12pt &quot;Arial Black&quot;;
-background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
+                             <string notr="true">font: 87 10pt &quot;Arial Black&quot;;
+	background-color:rgba(33, 43, 51,100);
+color: rgb(255, 255, 255);
+border:3px solid rgb(120,157,186);
+border-top-left-radius:10px;
+border-bottom-left-radius:10px;
+border-top-right-radius:10px;
+border-bottom-right-radius:10px;</string>
                             </property>
                             <property name="text">
                              <string/>
@@ -843,7 +932,7 @@ color: rgb(0, 0, 0);</string>
 	
 	
 	
-	background-color: rgb(221, 221, 221);
+	background-color: rgba(61, 80, 95,100);
 	
 }
 
@@ -852,21 +941,24 @@ QPushButton{
 border-color:rgb(23, 2, 127);
 	border-right-color: rgb(0, 0, 0);
 	
-font:87 12pt &quot;Arial Black&quot;;
-;
-	background-color: rgb(255, 255, 255);
+font:87 12pt &quot;Arial&quot;;
+
+	background-color:rgba(33, 43, 51,100);
 border-top-left-radius:20px;
 border-bottom-left-radius:20px;
-	color: rgb(0, 0, 0);
+	color:rgb(253, 253, 253);
+border:3px solid rgb(120,157,186);
 
 }
 QPushButton:hover{
 
-background-color: rgb(170, 170, 255);
+background-color:rgb(120, 157, 186);
 border-top-left-radius:20px;
 border-bottom-left-radius:20px;
-color:rgb(23, 2, 127);
-font:87 12pt &quot;Arial Black&quot;;}</string>
+
+font:87 12pt &quot;Arial Black&quot;;}
+
+</string>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_3">
                  <item>
@@ -882,7 +974,7 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>imagenes/share-svgrepo-com.svg</normaloff>imagenes/share-svgrepo-com.svg</iconset>
+                     <normaloff>icons/upload.svg</normaloff>icons/upload.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -905,7 +997,7 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>imagenes/filter-svgrepo-com.svg</normaloff>imagenes/filter-svgrepo-com.svg</iconset>
+                     <normaloff>icons/filter.svg</normaloff>icons/filter.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -928,7 +1020,7 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>imagenes/file-check-svgrepo-com.svg</normaloff>imagenes/file-check-svgrepo-com.svg</iconset>
+                     <normaloff>icons/save.svg</normaloff>icons/save.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -943,11 +1035,309 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="page_Inicio"/>
+            <widget class="QWidget" name="page_Inicio">
+             <property name="styleSheet">
+              <string notr="true">	background-color: rgba(61, 80, 95,100);</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QFrame" name="frame">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgba(61, 80, 95,100);</string>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_12" stretch="1,8">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QFrame" name="frame_2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>150</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>150</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgba(61, 80, 95,100);</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_13">
+                    <item>
+                     <spacer name="horizontalSpacer">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>756</width>
+                        <height>123</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_8">
+                      <property name="minimumSize">
+                       <size>
+                        <width>150</width>
+                        <height>100</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>150</width>
+                        <height>100</height>
+                       </size>
+                      </property>
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="pixmap">
+                       <pixmap>imagenes/inen.ico</pixmap>
+                      </property>
+                      <property name="scaledContents">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QFrame" name="frame_3">
+                   <property name="styleSheet">
+                    <string notr="true">background-color: rgba(61, 80, 95,100);</string>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,8">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QFrame" name="frame_4">
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgba(61, 80, 95,100);</string>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="0,0,0">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <spacer name="horizontalSpacer_15">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>215</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_9">
+                         <property name="minimumSize">
+                          <size>
+                           <width>500</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>500</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">font:87  italic 30pt &quot;Arial&quot;;
+
+color: rgb(255, 255, 255);
+	background-color: rgba(61, 80, 95,100);</string>
+                         </property>
+                         <property name="text">
+                          <string>BIENVENIDO</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_16">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>215</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QFrame" name="frame_5">
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgba(61, 80, 95,100);</string>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QHBoxLayout" name="horizontalLayout_15">
+                       <item>
+                        <spacer name="horizontalSpacer_14">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>47</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_10">
+                         <property name="minimumSize">
+                          <size>
+                           <width>800</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>800</width>
+                           <height>16777215</height>
+                          </size>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="pixmap">
+                          <pixmap>imagenes/icono.ico</pixmap>
+                         </property>
+                         <property name="scaledContents">
+                          <bool>true</bool>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_17">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>47</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </widget>
             <widget class="QWidget" name="page_equipo2">
              <property name="styleSheet">
-              <string notr="true">
-	background-color: rgb(221, 221, 221);</string>
+              <string notr="true">background-color: rgba(61, 80, 95,100);</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_5" stretch="8,1">
               <property name="spacing">
@@ -1013,8 +1403,8 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">font:87 12pt &quot;Arial Black&quot;;
-color: rgb(0, 0, 0);</string>
+                       <string notr="true">font:87 14pt &quot;Arial &quot;;
+color:rgb(255, 255, 255);</string>
                       </property>
                       <property name="text">
                        <string>Selección de Proceso</string>
@@ -1059,34 +1449,42 @@ color: rgb(0, 0, 0);</string>
                         <widget class="QComboBox" name="proceso2">
                          <property name="minimumSize">
                           <size>
-                           <width>200</width>
-                           <height>30</height>
+                           <width>300</width>
+                           <height>40</height>
                           </size>
                          </property>
                          <property name="maximumSize">
                           <size>
-                           <width>200</width>
-                           <height>30</height>
+                           <width>300</width>
+                           <height>40</height>
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">background-color: rgb(255, 255, 255);
-font: 87 7pt &quot;Arial Black&quot;;
-</string>
+                          <string notr="true">	background-color:rgba(33, 43, 51,100);
+font: 87 12pt &quot;Arial &quot;;
+border-top-left-radius:8px;
+border-bottom-left-radius:8px;
+color: rgb(255, 255, 255);
+border:3px solid rgb(120,157,186);</string>
                          </property>
                          <item>
                           <property name="text">
-                           <string>Proceso 1</string>
+                           <string>Seleccioné una opción</string>
                           </property>
                          </item>
                          <item>
                           <property name="text">
-                           <string>Proceso 2</string>
+                           <string>Concentración de Fósforo</string>
                           </property>
                          </item>
                          <item>
                           <property name="text">
-                           <string>Proceso 3</string>
+                           <string>Clorofila</string>
+                          </property>
+                         </item>
+                         <item>
+                          <property name="text">
+                           <string>Otro</string>
                           </property>
                          </item>
                         </widget>
@@ -1138,9 +1536,14 @@ font: 87 7pt &quot;Arial Black&quot;;
                           </size>
                          </property>
                          <property name="styleSheet">
-                          <string notr="true">font:87 12pt &quot;Arial Black&quot;;
-background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);</string>
+                          <string notr="true">font: 87 12pt &quot;Arial Black&quot;;
+	background-color:rgba(33, 43, 51,100);
+color: rgb(255, 255, 255);
+border-top-left-radius:10px;
+border-bottom-left-radius:10px;
+border-top-right-radius:10px;
+border-bottom-right-radius:10px;
+border:3px solid rgb(120,157,186);</string>
                          </property>
                          <property name="text">
                           <string/>
@@ -1178,8 +1581,7 @@ color: rgb(0, 0, 0);</string>
                  <string notr="true">QWidget{
 	
 	
-	
-	background-color: rgb(221, 221, 221);
+		background-color: rgba(61, 80, 95,100);
 	
 }
 
@@ -1188,31 +1590,42 @@ QPushButton{
 border-color:rgb(23, 2, 127);
 	border-right-color: rgb(0, 0, 0);
 	
-font:87 12pt &quot;Arial Black&quot;;
-;
-	background-color: rgb(255, 255, 255);
+font:87 12pt &quot;Arial&quot;;
+
+	background-color:rgba(33, 43, 51,100);
 border-top-left-radius:20px;
 border-bottom-left-radius:20px;
-	color: rgb(0, 0, 0);
+	color:rgb(253, 253, 253);
+border:3px solid rgb(120,157,186);
 
 }
 QPushButton:hover{
 
-background-color: rgb(170, 170, 255);
+background-color:rgb(120, 157, 186);
 border-top-left-radius:20px;
 border-bottom-left-radius:20px;
-color:rgb(23, 2, 127);
-font:87 12pt &quot;Arial Black&quot;;}</string>
+
+font:87 12pt &quot;Arial Black&quot;;}
+
+
+
+</string>
                 </property>
                 <layout class="QHBoxLayout" name="horizontalLayout_4">
                  <item>
                   <widget class="QPushButton" name="bt_load2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Subir</string>
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>imagenes/share-svgrepo-com.svg</normaloff>imagenes/share-svgrepo-com.svg</iconset>
+                     <normaloff>icons/upload.svg</normaloff>icons/upload.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -1224,12 +1637,25 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
                  </item>
                  <item>
                   <widget class="QPushButton" name="bt_filter2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true">
+
+
+
+</string>
+                   </property>
                    <property name="text">
                     <string>Filtrar</string>
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>imagenes/filter-svgrepo-com.svg</normaloff>imagenes/filter-svgrepo-com.svg</iconset>
+                     <normaloff>icons/filter.svg</normaloff>icons/filter.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -1241,12 +1667,18 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
                  </item>
                  <item>
                   <widget class="QPushButton" name="bt_save2">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>40</height>
+                    </size>
+                   </property>
                    <property name="text">
                     <string>Guardar</string>
                    </property>
                    <property name="icon">
                     <iconset>
-                     <normaloff>imagenes/file-check-svgrepo-com.svg</normaloff>imagenes/file-check-svgrepo-com.svg</iconset>
+                     <normaloff>icons/save.svg</normaloff>icons/save.svg</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -1272,6 +1704,8 @@ font:87 12pt &quot;Arial Black&quot;;}</string>
    </layout>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="recursos.qrc"/>
+ </resources>
  <connections/>
 </ui>

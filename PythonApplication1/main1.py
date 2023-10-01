@@ -27,7 +27,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QGraphicsDropShadowEffect
 from PyQt5.QtCore import QPropertyAnimation,QEasingCurve
 from PyQt5.QtGui import QColor
 from PyQt5.uic import loadUi
-
+from PyQt5.QtCore import pyqtSlot
 
 class rooti(QMainWindow):
     def __init__(self):
@@ -38,6 +38,8 @@ class rooti(QMainWindow):
         #condiciones iniciales botones
         self.metodo1.model().item(0).setEnabled(False)
         self.proceso1.model().item(0).setEnabled(False)
+        self.metodo1.setEnabled(False)
+        self.proceso1.setEnabled(False)
         self.bt_filter1.setEnabled(False)
         self.bt_save1.setEnabled(False)
         self.bt_load1.setEnabled(False)
@@ -71,6 +73,25 @@ class rooti(QMainWindow):
         #conexion botones
         self.bt_equi1.clicked.connect(lambda:self.stackedWidget.setCurrentWidget(self.page_equipo1))
         self.bt_equi2.clicked.connect(lambda:self.stackedWidget.setCurrentWidget(self.page_equipo2))
+        self.metodo1.currentIndexChanged.connect(self.actualizarComboBoxProceso)
+
+    @pyqtSlot()
+    def actualizarComboBoxProceso(self):
+            metodo_seleccionado = self.metodo1.currentText()
+            self.proceso1.clear()  # Limpiar las opciones actuales en comboBoxProceso1
+            self.metodo=metodo_seleccionado
+            if metodo_seleccionado == "Método Llama":
+                self.proceso1.addItems(["Seleccioné una opción","Opción A"])
+                self.proceso1.model().item(0).setEnabled(False)
+                
+            elif metodo_seleccionado == "Método Horno de Grafito":
+                self.proceso1.addItems(["Seleccioné una opción","Opción B"])
+                self.proceso1.model().item(0).setEnabled(False)
+                
+            elif metodo_seleccionado == "Método Generación de Hidruros":
+                self.proceso1.addItems(["Seleccioné una opción","Opción C"])
+                self.proceso1.model().item(0).setEnabled(False)
+                
         
         
 
@@ -114,7 +135,7 @@ class rooti(QMainWindow):
             width=self.frame_control.width()
             normal=0
             if width==0:
-                extender=200
+                extender=300
             else:
                 extender=normal
             self.animacion=QPropertyAnimation(self.frame_control,b'minimumWidth')
@@ -126,7 +147,9 @@ class rooti(QMainWindow):
     
     def equipo1(self):
         self.bt_load1.setEnabled(True)
-     
+        
+        # Conectar la señal currentIndexChanged de comboBoxMetodo1 a la función actualizarComboBoxProceso
+
         
     def load1(self):
         options = QFileDialog.Options()
@@ -136,28 +159,51 @@ class rooti(QMainWindow):
             self.label_4.setText("Archivo cargado")
             self.archivo_seleccionado = archivo
             self.bt_filter1.setEnabled(True)
+            self.metodo1.setEnabled(True)
+            self.proceso1.setEnabled(True)
+            
+            
+                       
+            
+            
             
         else:
-            self.label_4.setText('No se seleccionó ning\xFAn archivo.')
+            self.label_4.setText('No se seleccionó ningún archivo.')
             self.bt_filter1.setEnabled(False)
+    
+    
+
+    
+    
     
     def filter1(self):
         if self.archivo_seleccionado:
-            try:
-                item = self.metodo1.currentText()
-                item2 = self.proceso1.currentText()
-                self.label_7.setText("Has selecionado\n"+item+" y "+item2)
+            try: 
+                
+                metho1=self.metodo1.currentText()
+                process1=self.proceso1.currentText()
                 df = pd.read_csv(self.archivo_seleccionado, encoding='latin-1')
                 columnas = df.columns
                 print(columnas)
-                tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
-                self.tabla = tabla
+                
+                if metho1=='Método Llama'and process1=='Opción A':
+                    tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
+                    self.tabla = tabla
+                elif metho1=='Método Horno de Grafito'and process1=='Opción B':
+                    tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
+                    self.tabla = tabla
+                elif metho1=='Método Generación de Hidruros'and process1=='Opción C':
+                    tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
+                    self.tabla = tabla
+                
+                self.label_7.setText("Has selecionado"+metho1+" y "+process1)    
                 self.label_4.setText("Archivo Filtrado")
-                self.bt_save1.setEnabled(True)
+                self.bt_save1.setEnabled(True) 
+                    
             except Exception as e:
                 QMessageBox.critical(self, 'Error', f'Error al filtrar la tabla: {str(e)}')
         else:
-            QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 ning\xFAn archivo.')
+            QMessageBox.warning(self, 'Advertencia', 'No se seleccionó ningún archivo.')
     
     
     def save1(self):
@@ -187,7 +233,7 @@ class rooti(QMainWindow):
                     worksheet.set_default_row(15)  # Altura de fila predeterminada
                     worksheet.conditional_format(1, 0, len(df), len(df.columns)-1, {'type': 'no_blanks', 'format': cell_format})
                     writer.close()
-                    QMessageBox.information(self, 'Informaci\u00F3n', f'Archivo Excel guardado en: {ruta_guardado}')
+                    QMessageBox.information(self, 'Información', f'Archivo Excel guardado en: {ruta_guardado}')
                     self.label_4.setText("Archivo Guardado")
                     self.bt_save1.setEnabled(False)
                     self.bt_filter1.setEnabled(False)
@@ -197,11 +243,11 @@ class rooti(QMainWindow):
                    
                     
                 else:
-                    QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n una ruta de guardado.')
+                    QMessageBox.warning(self, 'Advertencia', 'No se seleccionó una ruta de guardado.')
             except Exception as e:
                 QMessageBox.critical(self, 'Error', f'Error al guardar en Excel: {str(e)}')
         else:
-            QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n ninguna tabla.')
+            QMessageBox.warning(self, 'Advertencia', 'No se seleccionó ninguna tabla.')
             
    
 
