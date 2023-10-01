@@ -161,20 +161,10 @@ class rooti(QMainWindow):
             self.bt_filter1.setEnabled(True)
             self.metodo1.setEnabled(True)
             self.proceso1.setEnabled(True)
-            
-            
-                       
-            
-            
-            
+                    
         else:
             self.label_4.setText('No se seleccionó ningún archivo.')
             self.bt_filter1.setEnabled(False)
-    
-    
-
-    
-    
     
     def filter1(self):
         if self.archivo_seleccionado:
@@ -318,17 +308,34 @@ class rooti(QMainWindow):
             try:
                 
                  df = self.df
-                 self.label_6.setText("Archivo Filtrado")
+                 proces3=self.proceso2.currentText()
+                 if proces3=='Concentración de Fósforo':
+                     df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']] = df['Triplicados'].str.split(expand=True)
+                     print(df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']])
+                     df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']] = df['Abs 690 Triplicados'].str.split(expand=True)
+                     print(df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']])
+                     columnas_seleccionadas = ['ID de muestra','Media Fosforo Total (mg/L)', 'Desv est', 'Media Abs 690 (AU)', 'Abs 690 Desv est',
+                     'Triplicados 1', 'Triplicados 2', 'Triplicados 3',
+                     'Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']
                  
-                 df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']] = df['Triplicados'].str.split(expand=True)
-                 print(df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']])
-                 df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']] = df['Abs 690 Triplicados'].str.split(expand=True)
-                 print(df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']])
+                 elif proces3=='Clorofila':
+                      df = df.rename(columns={'Media Fosforo Total (mg/L)': 'Media ClorofilaTotal (mg/L)'})
+                      df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']] = df['Triplicados'].str.split(expand=True)
+                      print(df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']])
+                      df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']] = df['Abs 690 Triplicados'].str.split(expand=True)
+                      print(df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']])
+                      columnas_seleccionadas = ['ID de muestra','Media ClorofilaTotal (mg/L)', 'Desv est', 'Media Abs 690 (AU)', 'Abs 690 Desv est',
+                          'Triplicados 1', 'Triplicados 2', 'Triplicados 3',
+                          'Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']
                  
-                 tabla1 = df[['ID de muestra', 'Media Fosforo Total (mg/L)','Desv est','Media Abs 690 (AU)','Abs 690 Desv est']]
-                 tabla1 = pd.concat([tabla1, df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']],df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']]], axis=1)
+
+                
+                 
+                 tabla1 = df[columnas_seleccionadas]
+                 #tabla1 = pd.concat([tabla1, df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']],df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']]], axis=1)
                  print(tabla1)
                  self.tabla1 = tabla1
+                 self.label_6.setText("Archivo Filtrado")
 
                 
             except Exception as e:
@@ -385,17 +392,7 @@ class rooti(QMainWindow):
                 QMessageBox.critical(self, 'Error', f'Error al guardar en Excel: {str(e)}')
         else:
             QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 ninguna tabla.')
-
-
-
-
     
-
-
-    
-    
-            
-            
           
 
         
