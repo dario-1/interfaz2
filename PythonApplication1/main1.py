@@ -81,15 +81,15 @@ class rooti(QMainWindow):
             self.proceso1.clear()  # Limpiar las opciones actuales en comboBoxProceso1
             self.metodo=metodo_seleccionado
             if metodo_seleccionado == "Método Llama":
-                self.proceso1.addItems(["Seleccioné una opción","Opción A"])
+                self.proceso1.addItems(["Seleccioné una opción","Fe","Cd","Cr"])
                 self.proceso1.model().item(0).setEnabled(False)
                 
             elif metodo_seleccionado == "Método Horno de Grafito":
-                self.proceso1.addItems(["Seleccioné una opción","Opción B"])
+                self.proceso1.addItems(["Seleccioné una opción","Cd","As","Pb"])
                 self.proceso1.model().item(0).setEnabled(False)
                 
             elif metodo_seleccionado == "Método Generación de Hidruros":
-                self.proceso1.addItems(["Seleccioné una opción","Opción C"])
+                self.proceso1.addItems(["Seleccioné una opción","HgT","Hgt"])
                 self.proceso1.model().item(0).setEnabled(False)
                 
         
@@ -186,15 +186,34 @@ class rooti(QMainWindow):
                 columnas = df.columns
                 print(columnas)
                 
-                if metho1=='Método Llama'and process1=='Opción A':
-                    tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
-                    self.tabla = tabla
-                elif metho1=='Método Horno de Grafito'and process1=='Opción B':
-                    tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
-                    self.tabla = tabla
-                elif metho1=='Método Generación de Hidruros'and process1=='Opción C':
-                    tabla = df[['RSD (Corr Abs)','Conc (Calib)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Calib)1','Conc (Samp)1', 'Abs (Corr)2','Conc (Calib)2','Conc (Samp)2', 'Abs (Corr)3','Conc (Calib)3','Conc (Samp)3']]
-                    self.tabla = tabla
+                if metho1=='Método Llama':
+                    if process1=='Fe':
+                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
+                        self.tabla = tabla
+                    elif process1=='Cd':
+                        tabla = df[['Sample ID','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
+                        self.tabla = tabla
+                    elif process1=='Cr':
+                        tabla = df[['Sample ID','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
+                        self.tabla = tabla
+                elif metho1=='Método Horno de Grafito':
+                    if process1=='Cd':
+                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
+                        self.tabla = tabla
+                    elif process1=='As':
+                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1']]
+                        self.tabla = tabla
+                    elif process1=='Pb':
+                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1']]
+                        self.tabla = tabla
+                    
+                elif metho1=='Método Generación de Hidruros':
+                    if process1=='HgT':
+                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
+                        self.tabla = tabla
+                    elif process1=='Hgt':
+                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1']]
+                        self.tabla = tabla
                 
                 self.label_7.setText("Has selecionado"+metho1+" y "+process1)    
                 self.label_4.setText("Archivo Filtrado")
