@@ -40,6 +40,7 @@ class rooti(QMainWindow):
         self.proceso1.model().item(0).setEnabled(False)
         self.metodo1.setEnabled(False)
         self.proceso1.setEnabled(False)
+        self.proceso2.setEnabled(False)
         self.bt_filter1.setEnabled(False)
         self.bt_save1.setEnabled(False)
         self.bt_load1.setEnabled(False)
@@ -74,6 +75,7 @@ class rooti(QMainWindow):
         self.bt_equi1.clicked.connect(lambda:self.stackedWidget.setCurrentWidget(self.page_equipo1))
         self.bt_equi2.clicked.connect(lambda:self.stackedWidget.setCurrentWidget(self.page_equipo2))
         self.metodo1.currentIndexChanged.connect(self.actualizarComboBoxProceso)
+        self.proceso2.currentIndexChanged.connect(self.actualizarnewproces)
 
     @pyqtSlot()
     def actualizarComboBoxProceso(self):
@@ -91,7 +93,29 @@ class rooti(QMainWindow):
             elif metodo_seleccionado == "Método Generación de Hidruros":
                 self.proceso1.addItems(["Seleccioné una opción","HgT","Hgt"])
                 self.proceso1.model().item(0).setEnabled(False)
+    
+    @pyqtSlot()
+    def actualizarnewproces(self):
+            metodo_seleccionado = self.proceso2.currentText()
+            self.newproces.hide()
+            self.bt_ingresar.setEnabled(True)
+            if metodo_seleccionado == "Otro":
+                self.newproces.show()
                 
+                self.text=self.bt_ingresar.clicked.connect(self.copiarTexto)
+                
+               
+    def copiarTexto(self):
+        
+        dato=self.dato1.text()
+        self.dato2='Media '+dato+' Total (mg/L)'
+               
+        
+        print(self.dato2)
+        
+        
+        
+        
         
         
 
@@ -262,6 +286,7 @@ class rooti(QMainWindow):
 
     def equipo2(self):
         self.bt_load2.setEnabled(True)
+        self.newproces.hide()
 
     def load2(self):
         file_dialog = QFileDialog()
@@ -294,6 +319,8 @@ class rooti(QMainWindow):
             columnas = df.columns
             self.bt_filter2.setEnabled(True)
             print(columnas)
+            self.proceso2.setEnabled(True)
+            
             
             
             
@@ -307,6 +334,8 @@ class rooti(QMainWindow):
             
             try:
                 
+                 
+                 
                  df = self.df
                  proces3=self.proceso2.currentText()
                  if proces3=='Concentración de Fósforo':
@@ -327,6 +356,23 @@ class rooti(QMainWindow):
                       columnas_seleccionadas = ['ID de muestra','Media ClorofilaTotal (mg/L)', 'Desv est', 'Media Abs 690 (AU)', 'Abs 690 Desv est',
                           'Triplicados 1', 'Triplicados 2', 'Triplicados 3',
                           'Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']
+                 
+                 elif proces3=='Otro':
+                     
+                     
+                     tex1=self.dato2
+                     print(tex1)
+                     df = df.rename(columns={'Media Fosforo Total (mg/L)': tex1})
+                     df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']] = df['Triplicados'].str.split(expand=True)
+                     print(df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']])
+                     df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']] = df['Abs 690 Triplicados'].str.split(expand=True)
+                     print(df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']])
+                     columnas_seleccionadas = ['ID de muestra',tex1, 'Desv est', 'Media Abs 690 (AU)', 'Abs 690 Desv est',
+                          'Triplicados 1', 'Triplicados 2', 'Triplicados 3',
+                          'Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']
+                    
+                     
+                     
                  
 
                 
