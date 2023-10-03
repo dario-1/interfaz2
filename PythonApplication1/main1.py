@@ -1,5 +1,5 @@
 
-# coding: latin1
+# -*- coding: latin-1 -*-
 import os
 import pandas as pd
 import sys
@@ -13,9 +13,6 @@ from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Alignment
 from openpyxl.utils import get_column_letter
 import io
-import tabula as tb
-from tabula import read_pdf
-#from pdf2excel import Converter
 from openpyxl.styles import PatternFill
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QFileDialog, QMainWindow, QVBoxLayout, QMessageBox
 from openpyxl import load_workbook, Workbook
@@ -320,7 +317,10 @@ class rooti(QMainWindow):
             self.bt_filter2.setEnabled(True)
             print(columnas)
             self.proceso2.setEnabled(True)
-            
+        else:
+            self.label_6.setText("No se seleccionó ningún archivo.")
+            self.bt_filter2.setEnabled(False)
+            self.proceso2.setEnabled(False)
             
             
             
@@ -388,7 +388,7 @@ class rooti(QMainWindow):
                  QMessageBox.critical(self, 'Error', f'Error al filtrar la tabla: {str(e)}')
             
         else:
-            QMessageBox.warning(self, 'Advertencia', 'No se selecci\u00F3n ninguna tabla.')
+            QMessageBox.warning(self, 'Advertencia', 'No se seleccionó ninguna tabla.')
 
     def save2(self):
         if hasattr(self, 'tabla1'):
@@ -437,7 +437,7 @@ class rooti(QMainWindow):
             except Exception as e:
                 QMessageBox.critical(self, 'Error', f'Error al guardar en Excel: {str(e)}')
         else:
-            QMessageBox.warning(self, 'Advertencia', 'No se seleccion\u00F3 ninguna tabla.')
+            QMessageBox.warning(self, 'Advertencia', 'No se seleccionó ninguna tabla.')
     
           
 
