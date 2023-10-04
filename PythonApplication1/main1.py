@@ -35,11 +35,12 @@ class rooti(QMainWindow):
         self.agregar.hide()
         self.newcolmns.hide()
         self.etiqueta.hide()
+        
         #condiciones iniciales botones
         self.metodo1.model().item(0).setEnabled(False)
         self.proceso1.model().item(0).setEnabled(False)
         self.metodo1.setEnabled(False)
-        self.proceso1.setEnabled(False)
+        # self.proceso1.setEnabled(False)
         self.proceso2.setEnabled(False)
         self.bt_filter1.setEnabled(False)
         self.bt_save1.setEnabled(False)
@@ -80,7 +81,7 @@ class rooti(QMainWindow):
     @pyqtSlot()
     def actualizarComboBoxProceso(self):
             metodo_seleccionado = self.metodo1.currentText()
-            self.proceso1.clear()  # Limpiar las opciones actuales en comboBoxProceso1
+              # Limpiar las opciones actuales en comboBoxProceso1
             self.metodo=metodo_seleccionado
             if metodo_seleccionado == "Requerimientos Usales":
                 
@@ -92,7 +93,7 @@ class rooti(QMainWindow):
             elif metodo_seleccionado == "Agregar columnas":
                 self.newcolmns.show()
                 self.agregar.show()
-                
+                self.proceso1.setEnabled(True)
                 
                 self.label_7.setText("Has selecionado "+self.metodo)
                 
@@ -189,7 +190,7 @@ class rooti(QMainWindow):
             self.archivo_seleccionado = archivo
             self.bt_filter1.setEnabled(True)
             self.metodo1.setEnabled(True)
-            self.proceso1.setEnabled(True)
+            
                     
         else:
             self.label_4.setText('No se seleccionó ningún archivo.')
