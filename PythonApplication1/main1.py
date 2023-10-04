@@ -32,6 +32,9 @@ class rooti(QMainWindow):
         loadUi('D:/ESPE/Practicas INEN/interfaz2/PythonApplication1/interfaz2.ui',self)
         self.bt_menu.clicked.connect(self.mover_menu)
         self.bt_restart.hide()
+        self.agregar.hide()
+        self.newcolmns.hide()
+        self.etiqueta.hide()
         #condiciones iniciales botones
         self.metodo1.model().item(0).setEnabled(False)
         self.proceso1.model().item(0).setEnabled(False)
@@ -79,17 +82,21 @@ class rooti(QMainWindow):
             metodo_seleccionado = self.metodo1.currentText()
             self.proceso1.clear()  # Limpiar las opciones actuales en comboBoxProceso1
             self.metodo=metodo_seleccionado
-            if metodo_seleccionado == "Método Llama":
-                self.proceso1.addItems(["Seleccioné una opción","Fe","Cd","Cr"])
-                self.proceso1.model().item(0).setEnabled(False)
+            if metodo_seleccionado == "Requerimientos Usales":
                 
-            elif metodo_seleccionado == "Método Horno de Grafito":
-                self.proceso1.addItems(["Seleccioné una opción","Cd","As","Pb"])
-                self.proceso1.model().item(0).setEnabled(False)
+                self.etiqueta.show()
+                self.newcolmns.hide()
+                self.agregar.hide()
+                self.label_7.setText("Has selecionado "+self.metodo)
                 
-            elif metodo_seleccionado == "Método Generación de Hidruros":
-                self.proceso1.addItems(["Seleccioné una opción","HgT","Hgt"])
-                self.proceso1.model().item(0).setEnabled(False)
+            elif metodo_seleccionado == "Agregar columnas":
+                self.newcolmns.show()
+                self.agregar.show()
+                
+                
+                self.label_7.setText("Has selecionado "+self.metodo)
+                
+            
     
     @pyqtSlot()
     def actualizarnewproces(self):
@@ -105,10 +112,11 @@ class rooti(QMainWindow):
     def copiarTexto(self):
         
         dato=self.dato1.text()
-        self.dato2='Media '+dato+' Total (mg/L)'
+        self.dato2='Media '+dato+'  (mg/L)'
                
         
         print(self.dato2)
+        
         
         
         
@@ -196,37 +204,52 @@ class rooti(QMainWindow):
                 df = pd.read_csv(self.archivo_seleccionado, encoding='latin-1')
                 columnas = df.columns
                 print(columnas)
+                encontradas = []
+                def tablita(df, variables):
+                    encontradas = []
+                    for var_buscada in variables:
+                        encontrada = False
+                        for columna in df.columns:
+                            if columna == var_buscada:
+                                encontradas.append(var_buscada)
+                                encontrada = True
+                                break
+                        if not encontrada:
+                            print(f"No encontrada: {var_buscada}")
+
+                    if not encontradas:
+                        return "Excel vacío"  # Retorna un mensaje si no se encontraron variables
+
+                    tabla = df[encontradas]
+                    return tabla
                 
-                if metho1=='Método Llama':
-                    if process1=='Fe':
-                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
-                        self.tabla = tabla
-                    elif process1=='Cd':
-                        tabla = df[['Sample ID','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
-                        self.tabla = tabla
-                    elif process1=='Cr':
-                        tabla = df[['Sample ID','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
-                        self.tabla = tabla
-                elif metho1=='Método Horno de Grafito':
-                    if process1=='Cd':
-                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
-                        self.tabla = tabla
-                    elif process1=='As':
-                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1']]
-                        self.tabla = tabla
-                    elif process1=='Pb':
-                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1']]
-                        self.tabla = tabla
+                if metho1=='Requerimientos Usales':
+                    variables=['Sample ID','Abs (Corr)','RSD (Corr Abs)','SD (Corr Abs)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']
                     
-                elif metho1=='Método Generación de Hidruros':
-                    if process1=='HgT':
-                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3']]
-                        self.tabla = tabla
-                    elif process1=='Hgt':
-                        tabla = df[['Sample ID', 'Abs (Corr)','RSD (Corr Abs)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1']]
-                        self.tabla = tabla
+                    self.tabla = tablita(df,variables)
+
+                elif metho1=='Agregar columnas':
+                    if process1=='SD':
+                        variables=['Sample ID','Abs (Corr)','RSD (Corr Abs)','SD (Corr Abs)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3','SD (Calib)','SD (Samp)']
+                        self.tabla = tablita(df,variables)
+
+                    elif process1=='Sig':
+                        variables=['Sample ID','Abs (Corr)','RSD (Corr Abs)','SD (Corr Abs)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3','Sig Area','Sig Ht']
+                        self.tabla = tablita(df,variables)
+
+                    elif process1=='Bkgnd':
+                        variables=['Sample ID','Abs (Corr)','RSD (Corr Abs)','SD (Corr Abs)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3','Bkgnd Area','Bkgnd Ht','BkgndArea1','BkgndHt1','BkgndArea2','BkgndHt2','BkgndArea3','BkgndHt3']
+                        self.tabla = tablita(df,variables)
+
+
+                    elif process1=='Peak':
+                       variables=['Sample ID','Abs (Corr)','RSD (Corr Abs)','SD (Corr Abs)','Conc (Samp)','RSD (Conc)','Abs (Corr)1','Conc (Samp)1','Abs (Corr)2','Conc (Samp)2','Abs (Corr)3','Conc (Samp)3','PeakArea1','PeakHt1','PeakArea2','PeakHt2','PeakArea3','PeakHt3']
+
+                       self.tabla = tablita(df,variables)
+
+
                 
-                self.label_7.setText("Has selecionado"+metho1+" y "+process1)    
+                    
                 self.label_4.setText("Archivo Filtrado")
                 self.bt_save1.setEnabled(True) 
                     
@@ -348,14 +371,12 @@ class rooti(QMainWindow):
                      'Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']
                  
                  elif proces3=='Clorofila':
-                      df = df.rename(columns={'Media Fosforo Total (mg/L)': 'Media ClorofilaTotal (mg/L)'})
-                      df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']] = df['Triplicados'].str.split(expand=True)
-                      print(df[['Triplicados 1', 'Triplicados 2', 'Triplicados 3']])
-                      df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']] = df['Abs 690 Triplicados'].str.split(expand=True)
-                      print(df[['Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']])
-                      columnas_seleccionadas = ['ID de muestra','Media ClorofilaTotal (mg/L)', 'Desv est', 'Media Abs 690 (AU)', 'Abs 690 Desv est',
-                          'Triplicados 1', 'Triplicados 2', 'Triplicados 3',
-                          'Abs 690 Triplicados 1', 'Abs 690 Triplicados 2', 'Abs 690 Triplicados 3']
+                      
+                      df[['Replicates 665nm', 'Replicates 665nm 2']] = df['Replicates 665nm'].str.split(expand=True)
+                      print(df[['Replicates 665nm', 'Replicates 665nm 2']])
+                      df[['Replicates 750nm 1', 'Replicates 750nm 2']] = df['Replicates 750nm'].str.split(expand=True)
+                      print(df[['Replicates 750nm 1', 'Replicates 750nm 2']])
+                      columnas_seleccionadas = ['ID de muestra','Replicates 665nm', 'Replicates 665nm 2','Media de absorbancias665nm','Replicates 750nm 1', 'Replicates 750nm 2','Media de absorbancias750nm']
                  
                  elif proces3=='Otro':
                      
